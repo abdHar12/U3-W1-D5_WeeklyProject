@@ -89,7 +89,6 @@ const interruptCallButtonAction = (): void => {
 };
 const button404Action = () => {
   divRemainingCredit.style.display = "block";
-
   spanRemainingTime.innerHTML = `Il credito residuo è di: ${FirstUser.numero404().toFixed(
     2
   )}€`;
@@ -119,8 +118,8 @@ const callButtonIstructions = (callButton: HTMLButtonElement): void => {
     const minutesLabel = document.getElementById("minutes") as HTMLLabelElement;
     const secondsLabel = document.getElementById("seconds") as HTMLLabelElement;
     ++totalSeconds;
-    secondsLabel.innerHTML = pad(Number(Math.ceil(totalSeconds % 60)));
-    minutesLabel.innerHTML = pad(Number(Math.ceil(totalSeconds / 60)));
+    secondsLabel.innerHTML = pad(Number(Math.floor(totalSeconds % 60)));
+    minutesLabel.innerHTML = pad(Number(Math.floor(totalSeconds / 60)));
   }
 };
 function pad(val: number) {

@@ -87,8 +87,8 @@ var callButtonIstructions = function (callButton) {
         var minutesLabel = document.getElementById("minutes");
         var secondsLabel = document.getElementById("seconds");
         ++totalSeconds;
-        secondsLabel.innerHTML = pad(Number(Math.ceil(totalSeconds % 60)));
-        minutesLabel.innerHTML = pad(Number(Math.ceil(totalSeconds / 60)));
+        secondsLabel.innerHTML = pad(Number(Math.floor(totalSeconds % 60)));
+        minutesLabel.innerHTML = pad(Number(Math.floor(totalSeconds / 60)));
     }
 };
 function pad(val) {
