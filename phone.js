@@ -37,11 +37,11 @@ var divRemainingCredit = document.getElementById("remaining-credit");
 var a = document.getElementById("return-previews");
 var callScreen = document.getElementById("call-screen");
 var callButton = document.getElementById("call-button");
+var numbCallsSpan = document.querySelector("#number-calls span");
 var interruptCallButtonAction = function () {
     var minutesLabel = document.getElementById("minutes");
     var secondsLabel = document.getElementById("seconds");
-    var numOfCalls = document.getElementById("number-calls");
-    numOfCalls.getElementsByTagName("span")[0].innerHTML = " ".concat(FirstUser.getNumeroChiamate(), " ");
+    numbCallsSpan.innerHTML = "".concat(FirstUser.getNumeroChiamate());
     console.log("".concat(minutesLabel.innerHTML, ":").concat(secondsLabel.innerHTML));
     FirstUser.chiamata(totalSeconds / 60);
     console.log(typeof (totalSeconds / 60));
@@ -59,24 +59,24 @@ var interruptCallButtonAction = function () {
     span2.innerText = "".concat(minutesLabel.innerHTML, ":").concat(secondsLabel.innerHTML);
     callDiv.appendChild(span1);
     callDiv.appendChild(span2);
+    console.log(FirstUser.getNumeroChiamate());
 };
 var button404Action = function () {
     divRemainingCredit.style.display = "block";
     spanRemainingTime.innerHTML = "Il credito residuo \u00E8 di: ".concat(FirstUser.numero404().toFixed(2), "\u20AC");
     console.log(FirstUser.numero404());
 };
-button404.onclick = button404Action;
 a.onclick = function () {
     callScreen.style.display = "none";
     registerScreen.style.display = "block";
+    numbCallsSpan.innerHTML = "".concat(FirstUser.getNumeroChiamate(), " ");
+    console.log("".concat(FirstUser.getNumeroChiamate(), " "));
 };
 var goCallButton = document.getElementById("go-call");
 goCallButton.onclick = function () {
     callScreen.style.display = "block";
     registerScreen.style.display = "none";
 };
-callButton.addEventListener("click", function () { return callButtonIstructions(callButton); });
-interruptCall.addEventListener("click", interruptCallButtonAction);
 var callButtonIstructions = function (callButton) {
     divRemainingCredit.style.display = "none";
     callButton.setAttribute("disabled", "true");
@@ -87,19 +87,22 @@ var callButtonIstructions = function (callButton) {
         var minutesLabel = document.getElementById("minutes");
         var secondsLabel = document.getElementById("seconds");
         ++totalSeconds;
-        secondsLabel.innerHTML = pad(totalSeconds % 60);
-        minutesLabel.innerHTML = pad(Number(Math.trunc(totalSeconds / 60)));
-    }
-    function pad(val) {
-        var valString = val + "";
-        if (valString.length < 2) {
-            return "0" + valString;
-        }
-        else {
-            return valString;
-        }
+        secondsLabel.innerHTML = pad(Number(Math.ceil(totalSeconds % 60)));
+        minutesLabel.innerHTML = pad(Number(Math.ceil(totalSeconds / 60)));
     }
 };
+function pad(val) {
+    var valString = val + "";
+    if (valString.length < 2) {
+        return "0" + valString;
+    }
+    else {
+        return valString;
+    }
+}
+callButton.addEventListener("click", function () { return callButtonIstructions(callButton); });
+interruptCall.addEventListener("click", interruptCallButtonAction);
+button404.onclick = button404Action;
 // const FirstUser = new PhoneUser(0, 0, []);
 // const secondUser = new PhoneUser(0, 0, []);
 // const thirdUser = new PhoneUser(0, 0, []);

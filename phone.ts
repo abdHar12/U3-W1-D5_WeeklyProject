@@ -59,14 +59,14 @@ const divRemainingCredit = document.getElementById(
 const a = document.getElementById("return-previews") as HTMLAnchorElement;
 const callScreen = document.getElementById("call-screen") as HTMLDivElement;
 const callButton = document.getElementById("call-button") as HTMLButtonElement;
+const numbCallsSpan = document.querySelector(
+  "#number-calls span"
+) as HTMLSpanElement;
 
 const interruptCallButtonAction = (): void => {
   const minutesLabel = document.getElementById("minutes") as HTMLLabelElement;
   const secondsLabel = document.getElementById("seconds") as HTMLLabelElement;
 
-  const numbCallsSpan = document.querySelector(
-    "#number-calls span"
-  ) as HTMLSpanElement;
   numbCallsSpan.innerHTML = `${FirstUser.getNumeroChiamate()}`;
   console.log(`${minutesLabel.innerHTML}:${secondsLabel.innerHTML}`);
   FirstUser.chiamata(totalSeconds / 60);
@@ -99,6 +99,8 @@ const button404Action = () => {
 a.onclick = () => {
   callScreen.style.display = "none";
   registerScreen.style.display = "block";
+  numbCallsSpan.innerHTML = `${FirstUser.getNumeroChiamate()} `;
+  console.log(`${FirstUser.getNumeroChiamate()} `);
 };
 
 const goCallButton = document.getElementById("go-call") as HTMLButtonElement;
@@ -117,8 +119,8 @@ const callButtonIstructions = (callButton: HTMLButtonElement): void => {
     const minutesLabel = document.getElementById("minutes") as HTMLLabelElement;
     const secondsLabel = document.getElementById("seconds") as HTMLLabelElement;
     ++totalSeconds;
-    secondsLabel.innerHTML = pad(totalSeconds % 60);
-    minutesLabel.innerHTML = pad(Number(Math.trunc(totalSeconds / 60)));
+    secondsLabel.innerHTML = pad(Number(Math.ceil(totalSeconds % 60)));
+    minutesLabel.innerHTML = pad(Number(Math.ceil(totalSeconds / 60)));
   }
 };
 function pad(val: number) {
